@@ -3,6 +3,8 @@ package co.edu.icesi.dev.uccareapp.transport.tests;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -74,6 +76,50 @@ class ProductCategoryServiceTests {
 		}
 		
 		
+	}
+	
+	@Nested
+	class Edit{
+		
+		@Test
+		@DisplayName("Se prueba que no sea posible editar un objeto por otro un objeto nulo")
+		public void Edit1() {
+			assertThrows(IllegalArgumentException.class, () -> {
+				productCategoryService.Update(null);
+		    });
+		}
+		
+		@Test
+		@DisplayName("Se prueba que no sea posible editar un objeto por otro cuyo nombre tenga menos de tres letras")
+		public void Save2() {
+			assertThrows(NumberFormatException.class, () -> {
+				Productcategory pc = new Productcategory();
+				pc.setName("AB");
+				productCategoryService.Update(pc);
+		    });
+		}
+		
+		@Test
+		@DisplayName("Se prueba que el objeto se pueda guardar correctamente si no es nulo y su nombre tiene tres caracteres o mas")
+		public void Save3() {
+			Optional<Productcategory> pc = Optional.of(new Productcategory());
+			pc.get().setName("ABC");
+			pc.get().setProductcategoryid(1234);
+			
+			when(productCategoryRepository.save(pc.get())).thenReturn(pc.get());
+			when(productCategoryRepository.findById(pc.get().getProductcategoryid())).thenReturn(pc);
+			
+			Productcategory productcategory = productCategoryService.Update(pc.get());
+			assertSame(pc.get().getProductcategoryid(), productcategory.getProductcategoryid());
+			
+			// Verifies behavior happened once
+			verify(productCategoryRepository).save(pc.get());
+			verify(productCategoryRepository).findById(pc.get().getProductcategoryid());
+			
+			// asserts that during the test, there are no other
+			 verifyNoMoreInteractions(productCategoryRepository);
+			
+		}
 	}
 
 	
