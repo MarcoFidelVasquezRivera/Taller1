@@ -1,5 +1,8 @@
 package co.edu.icesi.dev.uccareapp.transport.services;
 
-public interface ProductCategoryService {
+import co.edu.icesi.dev.uccareapp.transport.model.prod.Productcategory;
 
+public interface ProductCategoryService {
+	
+	public Productcategory Save(Productcategory productCategory);
 }
