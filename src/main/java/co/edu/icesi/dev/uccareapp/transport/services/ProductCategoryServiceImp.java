@@ -1,11 +1,14 @@
 package co.edu.icesi.dev.uccareapp.transport.services;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Productcategory;
+import co.edu.icesi.dev.uccareapp.transport.model.prod.Productsubcategory;
 import co.edu.icesi.dev.uccareapp.transport.repositories.ProductCategoryRepository;
 
 @Service
@@ -13,6 +16,7 @@ public class ProductCategoryServiceImp implements ProductCategoryService{
 	
 	private ProductCategoryRepository productCategoryRepository;
 	
+	@Autowired
 	public ProductCategoryServiceImp(ProductCategoryRepository productCategoryRepository) {
 		this.productCategoryRepository = productCategoryRepository;
 	}
@@ -26,6 +30,8 @@ public class ProductCategoryServiceImp implements ProductCategoryService{
 		if(productCategory.getName().length()<3) {
 			throw new NumberFormatException("The length of the name is can't be less that 3 charactes");
 		}
+		
+		productCategory.setProductsubcategories(new ArrayList<Productsubcategory>());
 		
 		return productCategoryRepository.save(productCategory);
 	}

@@ -1,10 +1,13 @@
 package co.edu.icesi.dev.uccareapp.transport.services;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import co.edu.icesi.dev.uccareapp.transport.model.prod.Product;
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Productcategory;
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Productsubcategory;
 import co.edu.icesi.dev.uccareapp.transport.repositories.ProductCategoryRepository;
@@ -16,6 +19,7 @@ public class ProductSubcategoryServiceImp implements ProductSubcategoryService{
 	ProductSubcategoryRepository productSubcategoryRepository;
 	ProductCategoryRepository productCategoryRepository;
 	
+	@Autowired
 	public ProductSubcategoryServiceImp(ProductSubcategoryRepository productSubcategoryRepository, ProductCategoryRepository productCategoryRepository) {
 		this.productCategoryRepository = productCategoryRepository;
 		this.productSubcategoryRepository = productSubcategoryRepository;
@@ -43,6 +47,7 @@ public class ProductSubcategoryServiceImp implements ProductSubcategoryService{
 		Productcategory productCategory = pc.get();
 		productCategory.addProductsubcategory(productsubcategory);
 		productsubcategory.setProductcategory(productCategory);
+		productsubcategory.setProducts(new ArrayList<Product>());
 		
 		return productSubcategoryRepository.save(productsubcategory);
 	}

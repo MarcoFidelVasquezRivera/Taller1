@@ -74,7 +74,7 @@ class ProductSubcategoryServiceTests {
 		}
 
 		@Test
-		@DisplayName("Se prueba que no sea posible guardar un ProductSubcategory que no tenga referencia a un Productcategory")
+		@DisplayName("Se prueba que no sea posible guardar un ProductSubcategory que tenga referencia a un Productcategory que no existe")
 		public void Save4() {
 			Productsubcategory psc = new Productsubcategory();
 			psc.setName("ABCDE");
@@ -94,7 +94,7 @@ class ProductSubcategoryServiceTests {
 		}
 
 		@Test
-		@DisplayName("Se prueba que no sea posible guardar un ProductSubcategory que no tenga referencia a un Productcategory")
+		@DisplayName("Se prueba que sea posible guardar un Productsubcategory correctamente si tiene todos los datos correctos")
 		public void Save5() {
 			Productsubcategory psc = new Productsubcategory();
 			psc.setName("ABCDE");
@@ -144,7 +144,7 @@ class ProductSubcategoryServiceTests {
 		}
 
 		@Test
-		@DisplayName("Se prueba que no sea posible guardar un ProductSubcategory por uno que no tenga referencia a un Productcategory")
+		@DisplayName("Se prueba que no sea posible actualizar un ProductSubcategory por uno que no tenga referencia a un Productcategory")
 		public void Edit3() {
 			assertThrows(UnsupportedOperationException.class, () -> {
 				Productsubcategory psc = new Productsubcategory();
@@ -154,7 +154,7 @@ class ProductSubcategoryServiceTests {
 		}
 
 		@Test
-		@DisplayName("Se prueba que no sea posible guardar un ProductSubcategory que no tenga referencia a un Productcategory")
+		@DisplayName("Se prueba que no sea posible actualizar un ProductSubcategory por uno que tenga referencia a un Productcategory que no existe")
 		public void Edit4() {
 			Productsubcategory psc = new Productsubcategory();
 			psc.setName("ABCDE");
@@ -203,7 +203,7 @@ class ProductSubcategoryServiceTests {
 		}
 		
 		@Test
-		@DisplayName("Se prueba que no sea posible guardar un ProductSubcategory que no tenga referencia a un Productcategory")
+		@DisplayName("Se prueba que sea posible actualizar un Productsubcategory correctamente si tiene todos los datos correctos")
 		public void Edit6() {
 			Productsubcategory psc = new Productsubcategory();
 			psc.setName("ABCDE");
