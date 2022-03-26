@@ -1,5 +1,9 @@
 package co.edu.icesi.dev.uccareapp.transport.services;
 
-public class ProductServiceImp implements ProductService{
+import org.springframework.stereotype.Service;
 
+@Service
+public class ProductServiceImp implements ProductService{
+	
+	
 }

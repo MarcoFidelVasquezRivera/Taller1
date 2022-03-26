@@ -5,10 +5,12 @@ import static org.mockito.Mockito.*;
 
 import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -91,7 +93,7 @@ class ProductCategoryServiceTests {
 		
 		@Test
 		@DisplayName("Se prueba que no sea posible editar un objeto por otro cuyo nombre tenga menos de tres letras")
-		public void Save2() {
+		public void Edit2() {
 			assertThrows(NumberFormatException.class, () -> {
 				Productcategory pc = new Productcategory();
 				pc.setName("AB");
@@ -101,7 +103,7 @@ class ProductCategoryServiceTests {
 		
 		@Test
 		@DisplayName("Se prueba que el objeto se pueda guardar correctamente si no es nulo y su nombre tiene tres caracteres o mas")
-		public void Save3() {
+		public void Edit3() {
 			Optional<Productcategory> pc = Optional.of(new Productcategory());
 			pc.get().setName("ABC");
 			pc.get().setProductcategoryid(1234);
@@ -117,7 +119,28 @@ class ProductCategoryServiceTests {
 			verify(productCategoryRepository).findById(pc.get().getProductcategoryid());
 			
 			// asserts that during the test, there are no other
-			 verifyNoMoreInteractions(productCategoryRepository);
+			verifyNoMoreInteractions(productCategoryRepository);
+			
+		}
+		
+		@Test
+		@DisplayName("Se prueba que el objeto no pueda ser editado ya que no existe un objeto guardado con el mismo id")
+		public void Edit4() {
+			Optional<Productcategory> pc = Optional.of(new Productcategory());
+			pc.get().setName("ABC");
+			pc.get().setProductcategoryid(1234);
+			
+			when(productCategoryRepository.findById(pc.get().getProductcategoryid())).thenReturn(null);
+			
+			assertThrows(NullPointerException.class, () -> {
+				productCategoryService.Update(pc.get());
+		    });
+			
+			// Verifies behavior happened once
+			verify(productCategoryRepository).findById(pc.get().getProductcategoryid());
+			
+			// asserts that during the test, there are no other
+			verifyNoMoreInteractions(productCategoryRepository);
 			
 		}
 	}

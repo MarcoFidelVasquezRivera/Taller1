@@ -1,6 +1,7 @@
 package co.edu.icesi.dev.uccareapp.transport.services;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -38,8 +39,13 @@ public class ProductCategoryServiceImp implements ProductCategoryService{
 		if(productCategory.getName().length()<3) {
 			throw new NumberFormatException("The length of the name is can't be less that 3 charactes");
 		}
+
+		Optional<Productcategory> opt = productCategoryRepository.findById(productCategory.getProductcategoryid());
+		Productcategory pc = opt.get();
 		
-		Productcategory pc = productCategoryRepository.findById(productCategory.getProductcategoryid()).get();
+		if(opt.isEmpty()) {
+			throw new NullPointerException("the Product category that is going to be edited does not exist");
+		}
 		
 		pc.setModifieddate(productCategory.getModifieddate());
 		pc.setName(productCategory.getName());
@@ -47,4 +53,5 @@ public class ProductCategoryServiceImp implements ProductCategoryService{
 		pc.setRowguid(productCategory.getRowguid());
 		return productCategoryRepository.save(pc);
 	}
+	
 }
