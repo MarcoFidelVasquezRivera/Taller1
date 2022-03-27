@@ -10,9 +10,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>co.edu.icesi.dev.uccareapp.transport.model</groupId>
-	<artifactId>taller1</artifactId>
+	<artifactId>taller1-Vasquez-Marco</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>taller1</name>
+	<name>taller1-Vasquez-Marco</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
