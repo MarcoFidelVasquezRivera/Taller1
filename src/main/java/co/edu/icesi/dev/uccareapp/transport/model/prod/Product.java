@@ -63,7 +63,7 @@ public class Product implements Serializable {
 
 	private Timestamp sellstartdate;
 
-	private String size;
+	private Integer size;
 
 	private BigDecimal standardcost;
 
@@ -312,7 +312,7 @@ public class Product implements Serializable {
 		return this.sellstartdate;
 	}
 
-	public String getSize() {
+	public Integer getSize() {
 		return this.size;
 	}
 
@@ -522,7 +522,7 @@ public class Product implements Serializable {
 		this.sellstartdate = sellstartdate;
 	}
 
-	public void setSize(String size) {
+	public void setSize(Integer size) {
 		this.size = size;
 	}
 

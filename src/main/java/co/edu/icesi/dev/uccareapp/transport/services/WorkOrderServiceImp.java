@@ -112,11 +112,14 @@ public class WorkOrderServiceImp implements WorkOrderService{
 		workOrderToEdit.setEnddate(workorder.getEnddate());
 		workOrderToEdit.setModifieddate(workorder.getModifieddate());
 		workOrderToEdit.setOrderqty(workorder.getOrderqty());
-		workOrderToEdit.setProduct(workorder.getProduct());
+		workOrderToEdit.setProduct(product);
 		workOrderToEdit.setScrappedqty(workorder.getScrappedqty());
-		workOrderToEdit.setScrapreason(workorder.getScrapreason());
+		workOrderToEdit.setScrapreason(scrapreason);
 		workOrderToEdit.setStartdate(workorder.getStartdate());
 		workOrderToEdit.setWorkorderroutings(workorder.getWorkorderroutings());
+		
+		product.addWorkorder(workOrderToEdit);
+		scrapreason.addWorkorder(workOrderToEdit);
 		
 		return workOrderRepository.save(workOrderToEdit);
 	}
