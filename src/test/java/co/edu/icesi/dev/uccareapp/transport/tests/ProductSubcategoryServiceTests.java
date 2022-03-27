@@ -98,6 +98,7 @@ class ProductSubcategoryServiceTests {
 		public void Save5() {
 			Productsubcategory psc = new Productsubcategory();
 			psc.setName("ABCDE");
+			psc.setProductsubcategoryid(2);
 			Integer id = 1;
 
 			Productcategory pc = new Productcategory();

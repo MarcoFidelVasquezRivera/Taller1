@@ -1,13 +1,11 @@
 package co.edu.icesi.dev.uccareapp.transport.services;
 
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import co.edu.icesi.dev.uccareapp.transport.model.prod.Product;
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Productcategory;
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Productsubcategory;
 import co.edu.icesi.dev.uccareapp.transport.repositories.ProductCategoryRepository;
@@ -44,10 +42,10 @@ public class ProductSubcategoryServiceImp implements ProductSubcategoryService{
 			throw new NullPointerException("The productCategory referenced does not exist");
 		}
 		
+		
+		
 		Productcategory productCategory = pc.get();
-		productCategory.addProductsubcategory(productsubcategory);
 		productsubcategory.setProductcategory(productCategory);
-		productsubcategory.setProducts(new ArrayList<Product>());
 		
 		return productSubcategoryRepository.save(productsubcategory);
 	}
@@ -79,17 +77,12 @@ public class ProductSubcategoryServiceImp implements ProductSubcategoryService{
 		Productcategory productCategory = pc.get();
 		
 		Productsubcategory productsubcategoryToEdit = psc.get();
-		productsubcategoryToEdit.getProductcategory().removeProductsubcategory(productsubcategoryToEdit);
 		
 		productsubcategoryToEdit.setModifieddate(productsubcategory.getModifieddate());
 		productsubcategoryToEdit.setName(productsubcategory.getName());
 		productsubcategoryToEdit.setProductcategory(productCategory);
-		productsubcategoryToEdit.setProducts(productsubcategory.getProducts());
 		productsubcategoryToEdit.setProductsubcategoryid(productsubcategory.getProductsubcategoryid());
 		productsubcategoryToEdit.setRowguid(productsubcategory.getRowguid());
-		
-
-		productCategory.addProductsubcategory(productsubcategoryToEdit);
 		
 		return productSubcategoryRepository.save(productsubcategoryToEdit);
 	}

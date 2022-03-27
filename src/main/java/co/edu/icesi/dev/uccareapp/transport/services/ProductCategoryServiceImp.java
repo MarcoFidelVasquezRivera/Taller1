@@ -31,7 +31,6 @@ public class ProductCategoryServiceImp implements ProductCategoryService{
 			throw new NumberFormatException("The length of the name is can't be less that 3 charactes");
 		}
 		
-		productCategory.setProductsubcategories(new ArrayList<Productsubcategory>());
 		
 		return productCategoryRepository.save(productCategory);
 	}
@@ -53,9 +52,10 @@ public class ProductCategoryServiceImp implements ProductCategoryService{
 			throw new NullPointerException("the Product category that is going to be edited does not exist");
 		}
 		
+		
+		
 		pc.setModifieddate(productCategory.getModifieddate());
 		pc.setName(productCategory.getName());
-		pc.setProductsubcategories(productCategory.getProductsubcategories());
 		pc.setRowguid(productCategory.getRowguid());
 		return productCategoryRepository.save(pc);
 	}

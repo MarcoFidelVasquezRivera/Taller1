@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Product;
@@ -23,6 +24,7 @@ public class ProductServiceImp implements ProductService{
 	
 	private ProductRepository productRepository;
 	
+	@Autowired
 	public ProductServiceImp(ProductCategoryRepository productCategoryRepository, ProductSubcategoryRepository productSubcategoryRepository, ProductRepository productRepository) {
 		this.productCategoryRepository = productCategoryRepository;
 		this.productSubcategoryRepository = productSubcategoryRepository;
@@ -66,7 +68,6 @@ public class ProductServiceImp implements ProductService{
 		}
 		
 		Productsubcategory productSubcategory = ops.get();
-		
 		product.setProductsubcategory(productSubcategory);
 		
 		return productRepository.save(product);
@@ -116,7 +117,6 @@ public class ProductServiceImp implements ProductService{
 		Product productToEdit = op.get();
 		Productsubcategory productSubcategory = ops.get();
 
-		productToEdit.getProductsubcategory().removeProduct(productToEdit);
 		productToEdit.setBillofmaterials1(product.getBillofmaterials1());
 		productToEdit.setBillofmaterials2(product.getBillofmaterials2());
 		productToEdit.setClass_(product.getClass_());
@@ -153,7 +153,6 @@ public class ProductServiceImp implements ProductService{
 		productToEdit.setWeight(product.getWeight());
 		productToEdit.setWorkorders(product.getWorkorders());
 		
-		productSubcategory.addProduct(productToEdit);
 		return productRepository.save(productToEdit);
 	}
 	

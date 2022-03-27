@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Product;
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Scrapreason;
@@ -13,6 +14,7 @@ import co.edu.icesi.dev.uccareapp.transport.repositories.ProductRepository;
 import co.edu.icesi.dev.uccareapp.transport.repositories.ScrapReasonRepository;
 import co.edu.icesi.dev.uccareapp.transport.repositories.WorkOrderRepository;
 
+@Service
 public class WorkOrderServiceImp implements WorkOrderService{
 
 	private WorkOrderRepository workOrderRepository;
@@ -58,9 +60,6 @@ public class WorkOrderServiceImp implements WorkOrderService{
 		Scrapreason sr = osr.get();
 		Product pr = op.get();
 		
-		sr.addWorkorder(workorder);
-		pr.addWorkorder(workorder);
-		
 		workorder.setScrapreason(sr);
 		workorder.setProduct(pr);
 		
@@ -104,10 +103,6 @@ public class WorkOrderServiceImp implements WorkOrderService{
 		Product product = op.get();
 		Scrapreason scrapreason = osr.get();
 		
-		//se eliminan las anteriores referencias a workorder
-		workOrderToEdit.getProduct().removeWorkorder(workOrderToEdit);
-		workOrderToEdit.getScrapreason().removeWorkorder(workOrderToEdit);
-		
 		workOrderToEdit.setDuedate(workorder.getDuedate());
 		workOrderToEdit.setEnddate(workorder.getEnddate());
 		workOrderToEdit.setModifieddate(workorder.getModifieddate());
@@ -117,9 +112,7 @@ public class WorkOrderServiceImp implements WorkOrderService{
 		workOrderToEdit.setScrapreason(scrapreason);
 		workOrderToEdit.setStartdate(workorder.getStartdate());
 		workOrderToEdit.setWorkorderroutings(workorder.getWorkorderroutings());
-		
-		product.addWorkorder(workOrderToEdit);
-		scrapreason.addWorkorder(workOrderToEdit);
+
 		
 		return workOrderRepository.save(workOrderToEdit);
 	}

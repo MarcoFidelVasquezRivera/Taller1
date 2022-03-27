@@ -124,7 +124,7 @@ class ProductCategoryServiceTests {
 		}
 		
 		@Test
-		@DisplayName("Se prueba que el objeto no pueda ser editado ya que no existe un objeto guardado con el mismo id")
+		@DisplayName("Se prueba que pueda ser editado ya que no existe un objeto guardado con el mismo id")
 		public void Edit4() {
 			Optional<Productcategory> pc = Optional.of(new Productcategory());
 			pc.get().setName("ABC");
