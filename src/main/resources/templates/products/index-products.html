@@ -40,8 +40,8 @@
 							<tr th:each="product : ${products}">
 								<td class="text-info" th:text="${product.name}"></td>
 								<td class="text-info" th:text="${product.productnumber}"></td>
-								<td th:text="${#temporals.format(app.sellstartdate, 'dd/MM/yyyy')}"></td>
-								<td th:text="${#temporals.format(app.sellenddate, 'dd/MM/yyyy')}"></td>
+								<td th:text="${#temporals.format(product.sellstartdate, 'dd/MM/yyyy')}"></td>
+								<td th:text="${#temporals.format(product.sellenddate, 'dd/MM/yyyy')}"></td>
 								<td class="text-info" th:text="${product.size}"></td>
 								<td class="text-info" th:text="${product.weight}"></td>
 								<td class="text-info" th:text="${product.productsubcategory.name}"></td>

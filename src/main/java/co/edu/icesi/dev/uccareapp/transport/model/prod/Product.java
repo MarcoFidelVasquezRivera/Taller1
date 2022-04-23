@@ -3,6 +3,7 @@ package co.edu.icesi.dev.uccareapp.transport.model.prod;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -15,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * The persistent class for the product database table.
@@ -58,10 +61,12 @@ public class Product implements Serializable {
 	private Integer rowguid;
 
 	private Integer safetystocklevel;
-
-	private Timestamp sellenddate;
-
-	private Timestamp sellstartdate;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate sellenddate;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate sellstartdate;
 
 	private Integer size;
 
@@ -304,11 +309,11 @@ public class Product implements Serializable {
 		return this.safetystocklevel;
 	}
 
-	public Timestamp getSellenddate() {
+	public LocalDate getSellenddate() {
 		return this.sellenddate;
 	}
 
-	public Timestamp getSellstartdate() {
+	public LocalDate getSellstartdate() {
 		return this.sellstartdate;
 	}
 
@@ -514,11 +519,11 @@ public class Product implements Serializable {
 		this.safetystocklevel = safetystocklevel;
 	}
 
-	public void setSellenddate(Timestamp sellenddate) {
+	public void setSellenddate(LocalDate sellenddate) {
 		this.sellenddate = sellenddate;
 	}
 
-	public void setSellstartdate(Timestamp sellstartdate) {
+	public void setSellstartdate(LocalDate sellstartdate) {
 		this.sellstartdate = sellstartdate;
 	}
 

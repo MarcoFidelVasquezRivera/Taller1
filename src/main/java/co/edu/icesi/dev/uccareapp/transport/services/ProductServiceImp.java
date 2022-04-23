@@ -2,6 +2,7 @@ package co.edu.icesi.dev.uccareapp.transport.services;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -41,10 +42,10 @@ public class ProductServiceImp implements ProductService{
 			throw new NullPointerException("The productNumber attribute can't be null");
 		}
 		
-		Timestamp startDate = product.getSellstartdate();
-		Timestamp endDate = product.getSellenddate();
+		LocalDate startDate = product.getSellstartdate();
+		LocalDate endDate = product.getSellenddate();
 		
-		if(startDate.after(endDate)) {
+		if(startDate.isAfter(endDate)) {
 			throw new ArithmeticException("Start date can not be after the end date, it must be before the endDate");
 		}
 		
@@ -83,10 +84,10 @@ public class ProductServiceImp implements ProductService{
 			throw new NullPointerException("The productNumber attribute can't be null");
 		}
 		
-		Timestamp startDate = product.getSellstartdate();
-		Timestamp endDate = product.getSellenddate();
+		LocalDate startDate = product.getSellstartdate();
+		LocalDate endDate = product.getSellenddate();
 		
-		if(startDate.after(endDate)) {
+		if(startDate.isAfter(endDate)) {
 			throw new ArithmeticException("Start date can not be after the end date, it must be before the endDate");
 		}
 		
@@ -154,6 +155,21 @@ public class ProductServiceImp implements ProductService{
 		productToEdit.setWorkorders(product.getWorkorders());
 		
 		return productRepository.save(productToEdit);
+	}
+
+	public Iterable<Product> findAll() {
+		// TODO Auto-generated method stub
+		return productRepository.findAll();
+	}
+
+	public Optional<Product> findById(Integer id) {
+		// TODO Auto-generated method stub
+		return productRepository.findById(id);
+	}
+
+	public void delete(Product product) {
+		// TODO Auto-generated method stub
+		productRepository.delete(product);
 	}
 	
 }
