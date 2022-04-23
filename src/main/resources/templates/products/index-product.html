@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>Products</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+	integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+	crossorigin="anonymous">
+</head>
+<body>
+	<div th:switch="${products}" class="container my-5">
+		<div class="row">
+			<div class="col-md-10">
+				<h2 th:case="null">No Products yet!</h2>
+				<div th:case="*">
+					<h2 class="my-5">Products</h2>
+					<table class="table table-striped table-responsive-md">
+						<thead>
+							<tr>
+								<th>ProductsName</th>
+								<th>Número</th>
+								<th>Fecha inicio de venta</th>
+								<th>Fecha fin de venta</th>
+								<th>Tamaño</th>
+								<th>Peso</th>
+								<th>SubcategoryName</th>
+								<th>CategoryName</th>
+								<th>Edit</th>
+								<th>Delete</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="product : ${products}">
+								<td class="text-info" th:text="${product.name}"></td>
+								<td class="text-info" th:text="${product.productnumber}"></td>
+								<td th:text="${#temporals.format(app.sellstartdate, 'dd/MM/yyyy')}"></td>
+								<td th:text="${#temporals.format(app.sellenddate, 'dd/MM/yyyy')}"></td>
+								<td class="text-info" th:text="${product.size}"></td>
+								<td class="text-info" th:text="${product.weight}"></td>
+								<td class="text-info" th:text="${product.productsubcategory.name}"></td>
+								<td class="text-info" th:text="${product.productsubcategory.productcategory.name}"></td>
+								<td><a th:href="@{/products/edit/{id}(id=${product.productid})}"
+									class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
+								<td><a th:href="@{/products/del/{id}(id=${product.productid})}"
+									class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<p class="my-5">
+					<a href="/categories/add" class="btn btn-primary">Add Category</a>
+				</p>
+				<p class="my-5">
+					<a href="/products/add" class="btn btn-primary">Add Product</a>
+				</p>
+				<p class="my-5">
+					<a href="/subcategories/add" class="btn btn-primary">Add Subcategory</a>
+				</p>
+				<p class="my-5">
+					<a href="/workorders/add" class="btn btn-primary">Add Workorder</a>
+				</p>
+			</div>
+		</div>
+		<a href="/"><i class="fas fa-home ml-2"></i> Go back to main</a>
+	</div>
+</body>
+</html>

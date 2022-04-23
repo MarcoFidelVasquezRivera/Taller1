@@ -86,4 +86,19 @@ public class ProductSubcategoryServiceImp implements ProductSubcategoryService{
 		
 		return productSubcategoryRepository.save(productsubcategoryToEdit);
 	}
+
+	public Iterable<Productsubcategory> findAll() {
+		// TODO Auto-generated method stub
+		return productSubcategoryRepository.findAll();
+	}
+
+	public Optional<Productsubcategory> findById(Integer id) {
+		// TODO Auto-generated method stub
+		return productSubcategoryRepository.findById(id);
+	}
+
+	public void delete(Productsubcategory productSubcategory) {
+		// TODO Auto-generated method stub
+		productSubcategoryRepository.delete(productSubcategory);
+	}
 }

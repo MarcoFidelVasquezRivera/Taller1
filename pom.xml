@@ -69,6 +69,12 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>
+		<!-- Required for Developing -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

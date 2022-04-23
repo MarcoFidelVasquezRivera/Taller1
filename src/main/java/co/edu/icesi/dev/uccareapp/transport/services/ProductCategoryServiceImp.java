@@ -59,5 +59,20 @@ public class ProductCategoryServiceImp implements ProductCategoryService{
 		pc.setRowguid(productCategory.getRowguid());
 		return productCategoryRepository.save(pc);
 	}
+
+	public Iterable<Productcategory> findAll() {
+		// TODO Auto-generated method stub
+		return productCategoryRepository.findAll();
+	}
+
+	public Optional<Productcategory> findById(Integer id) {
+		// TODO Auto-generated method stub
+		return productCategoryRepository.findById(id);
+	}
+
+	public void delete(Productcategory productCategory) {
+		// TODO Auto-generated method stub
+		productCategoryRepository.delete(productCategory);
+	}
 	
 }
