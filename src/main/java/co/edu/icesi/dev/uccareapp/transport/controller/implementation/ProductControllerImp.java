@@ -5,13 +5,17 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import co.edu.icesi.dev.uccareapp.transport.controller.interfaces.ProductController;
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Product;
+import co.edu.icesi.dev.uccareapp.transport.model.prod.Workorder;
 import co.edu.icesi.dev.uccareapp.transport.services.ProductCategoryServiceImp;
 import co.edu.icesi.dev.uccareapp.transport.services.ProductService;
 import co.edu.icesi.dev.uccareapp.transport.services.ProductServiceImp;
@@ -51,9 +55,17 @@ public class ProductControllerImp implements ProductController{
 
 
 	@PostMapping("/products/add")
-	public String saveUser(Product product, Model model, @RequestParam(value = "action", required = true) String action) {
-		if (!action.equals("Cancel"))
+	public String saveUser(@Validated @ModelAttribute Product product, BindingResult bindingResult, Model model, @RequestParam(value = "action", required = true) String action) {
+		if (!action.equals("Cancel")) {
+			model.addAttribute("subcategories", productSubCategoryService.findAll());
+			if (bindingResult.hasErrors()) {	
+				return "products/add-product";
+			}else if(product.getSellenddate().isBefore(product.getSellstartdate())) {
+				model.addAttribute("dateError", true);
+				return "products/add-product";
+			}
 			productService.Save(product, product.getProductsubcategory().getProductcategory().getProductcategoryid(), product.getProductsubcategory().getProductsubcategoryid());
+		}
 		return "redirect:/products/";
 	}
 
@@ -69,9 +81,16 @@ public class ProductControllerImp implements ProductController{
 	}
 
 	@PostMapping("/products/edit/{id}")
-	public String updateUser(@PathVariable("id") Integer id,
-			@RequestParam(value = "action", required = true) String action,Product product, Model model) {
+	public String updateUser(@Validated @ModelAttribute Product product, BindingResult bindingResult,@PathVariable("id") Integer id,
+			@RequestParam(value = "action", required = true) String action, Model model) {
 		if (action != null && !action.equals("Cancel")) {
+			model.addAttribute("subcategories", productSubCategoryService.findAll());
+			if (bindingResult.hasErrors()) {	
+				return "products/update-product";
+			}else if(product.getSellenddate().isBefore(product.getSellstartdate())) {
+				model.addAttribute("dateError", true);
+				return "products/update-product";
+			}
 			productService.Update(product, product.getProductsubcategory().getProductcategory().getProductcategoryid(), product.getProductsubcategory().getProductsubcategoryid());
 			model.addAttribute("products", productService.findAll());
 		}

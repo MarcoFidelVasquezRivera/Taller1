@@ -75,6 +75,7 @@
 							</select> <span th:if="${#fields.hasErrors('productsubcategory')}"
 								th:errors="*{productsubcategory}" class="text-danger"></span>
 						</div>
+						</select> <span th:if="${dateError}" class="text-danger">La fecha final no puede estar antes de la fecha inicial</span>
 					</div>
 					<div class="row">
 						<div class="col-md-4 mt-3">

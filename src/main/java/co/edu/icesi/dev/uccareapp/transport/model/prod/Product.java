@@ -16,6 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -50,10 +53,12 @@ public class Product implements Serializable {
 
 	private Timestamp modifieddate;
 
+	@NotBlank
 	private String name;
 
 	private String productline;
 
+	@NotBlank
 	private String productnumber;
 
 	private Integer reorderpoint;
@@ -68,12 +73,16 @@ public class Product implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate sellstartdate;
 
+	@NotNull
+	@Positive
 	private Integer size;
 
 	private BigDecimal standardcost;
 
 	private String style;
-
+	
+	@NotNull
+	@Positive
 	private BigDecimal weight;
 
 	// bi-directional many-to-one association to Billofmaterial
@@ -90,6 +99,7 @@ public class Product implements Serializable {
 	private Productmodel productmodel;
 
 	// bi-directional many-to-one association to Productsubcategory
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "productsubcategoryid")
 	private Productsubcategory productsubcategory;

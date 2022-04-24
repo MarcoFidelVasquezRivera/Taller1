@@ -13,6 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * The persistent class for the productsubcategory database table.
@@ -30,6 +33,8 @@ public class Productsubcategory implements Serializable {
 
 	private Timestamp modifieddate;
 
+	@NotBlank
+	@Size(min=5,message = "El tamaño debe ser de mínimo 5 caracteres")
 	private String name;
 
 	private Integer rowguid;
@@ -39,6 +44,7 @@ public class Productsubcategory implements Serializable {
 	private List<Product> products;
 
 	// bi-directional many-to-one association to Productcategory
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "productcategoryid")
 	private Productcategory productcategory;

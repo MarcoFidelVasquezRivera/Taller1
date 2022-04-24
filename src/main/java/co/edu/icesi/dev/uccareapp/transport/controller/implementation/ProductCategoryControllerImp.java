@@ -5,7 +5,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +21,11 @@ public class ProductCategoryControllerImp implements ProductCategoryController{
 	@Autowired
 	ProductCategoryServiceImp productCategoryService;
 	
+	@GetMapping("/login")
+	public String login(Model model) {
+		return "/login";
+	}
+	
 	@GetMapping("/categories/")
 	public String indexUser(Model model) {
 		model.addAttribute("categories", productCategoryService.findAll());
@@ -26,7 +34,7 @@ public class ProductCategoryControllerImp implements ProductCategoryController{
 	
 	@GetMapping("/categories/add")
 	public String addUser(Model model) {
-		model.addAttribute("category", new Productcategory());
+		model.addAttribute("productcategory", new Productcategory());
 		return "categories/add-category";
 	}
 
@@ -40,9 +48,13 @@ public class ProductCategoryControllerImp implements ProductCategoryController{
 
 
 	@PostMapping("/categories/add")
-	public String saveUser(Productcategory pc, Model model, @RequestParam(value = "action", required = true) String action) {
-		if (!action.equals("Cancel"))
+	public String saveUser(@Validated @ModelAttribute Productcategory pc, BindingResult bindingResult, Model model, @RequestParam(value = "action", required = true) String action) {
+		if (!action.equals("Cancel")) {
+			if (bindingResult.hasErrors()) {
+				return "categories/add-category";
+			}
 			productCategoryService.Save(pc);
+		}
 		return "redirect:/categories/";
 	}
 
@@ -51,14 +63,17 @@ public class ProductCategoryControllerImp implements ProductCategoryController{
 		Optional<Productcategory> pc = productCategoryService.findById(id);
 		if (pc == null)
 			throw new IllegalArgumentException("Invalid user Id:" + id);
-		model.addAttribute("category", pc.get());
+		model.addAttribute("productcategory", pc.get());
 		return "categories/update-category";
 	}
 
 	@PostMapping("/categories/edit/{id}")
-	public String updateUser(@PathVariable("id") Integer id,
-			@RequestParam(value = "action", required = true) String action,Productcategory pc, Model model) {
+	public String updateUser(@Validated @ModelAttribute Productcategory pc, BindingResult bindingResult,@PathVariable("id") Integer id,
+			@RequestParam(value = "action", required = true) String action, Model model) {
 		if (action != null && !action.equals("Cancel")) {
+			if (bindingResult.hasErrors()) {
+				return "categories/update-category";
+			}
 			productCategoryService.Update(pc);
 			model.addAttribute("categories", productCategoryService.findAll());
 		}

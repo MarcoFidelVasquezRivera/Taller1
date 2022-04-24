@@ -79,6 +79,7 @@
 							<input type="text" th:field="*{productid}" class="form-control" id="productid"
 								placeholder="Productid" readonly hidden>
 						</div>
+						</select> <span th:if="${dateError}" class="text-danger">La fecha final no puede estar antes de la fecha inicial</span>
 					</div>
 					<div class="row">
 						<div class="col-md-4 mt-3">

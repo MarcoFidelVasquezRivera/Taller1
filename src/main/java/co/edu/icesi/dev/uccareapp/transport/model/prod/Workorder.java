@@ -2,7 +2,13 @@ package co.edu.icesi.dev.uccareapp.transport.model.prod;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -21,18 +27,25 @@ public class Workorder implements Serializable {
 	private Integer workorderid;
 
 	private Timestamp duedate;
-
-	private Timestamp enddate;
+	@NotNull
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate enddate;
 
 	private Timestamp modifieddate;
 
+	@NotNull
+	@PositiveOrZero
 	private Integer orderqty;
 
+	@NotNull
+	@PositiveOrZero
 	private Integer scrappedqty;
-
-	private Timestamp startdate;
+	@NotNull
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate startdate;
 
 	//bi-directional many-to-one association to Product
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name="productid")
 	private Product product;
@@ -65,11 +78,11 @@ public class Workorder implements Serializable {
 		this.duedate = duedate;
 	}
 
-	public Timestamp getEnddate() {
+	public LocalDate getEnddate() {
 		return this.enddate;
 	}
 
-	public void setEnddate(Timestamp enddate) {
+	public void setEnddate(LocalDate enddate) {
 		this.enddate = enddate;
 	}
 
@@ -97,11 +110,11 @@ public class Workorder implements Serializable {
 		this.scrappedqty = scrappedqty;
 	}
 
-	public Timestamp getStartdate() {
+	public LocalDate getStartdate() {
 		return this.startdate;
 	}
 
-	public void setStartdate(Timestamp startdate) {
+	public void setStartdate(LocalDate startdate) {
 		this.startdate = startdate;
 	}
 

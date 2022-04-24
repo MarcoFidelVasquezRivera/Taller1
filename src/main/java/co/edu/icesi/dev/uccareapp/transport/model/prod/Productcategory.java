@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
  * The persistent class for the productcategory database table.
@@ -28,6 +30,8 @@ public class Productcategory implements Serializable {
 
 	private Timestamp modifieddate;
 
+	@NotBlank
+	@Size(min=3,message = "El tamaño debe ser de mínimo 5 caracteres")
 	private String name;
 
 	private Integer rowguid;
