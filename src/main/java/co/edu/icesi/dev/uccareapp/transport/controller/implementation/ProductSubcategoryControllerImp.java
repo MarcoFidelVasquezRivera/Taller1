@@ -1,5 +1,6 @@
 package co.edu.icesi.dev.uccareapp.transport.controller.implementation;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,15 @@ public class ProductSubcategoryControllerImp implements ProductSubcategoryContro
 			productSubCategoryService.Save(psc,psc.getProductcategory().getProductcategoryid());
 		}
 		return "redirect:/subcategories/";
+	}
+	
+	@GetMapping("/subcategories/category/{id}")
+	public String showCategory(@PathVariable("id") Integer id, Model model) {
+		Productcategory product = productCategoryService.findById(id).get();
+		ArrayList<Productcategory> products = new ArrayList<Productcategory>();
+		products.add(product);
+		model.addAttribute("categories", products);
+		return "categories/index-categories";
 	}
 
 	@GetMapping("/subcategories/edit/{id}")

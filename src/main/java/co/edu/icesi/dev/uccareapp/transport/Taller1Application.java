@@ -66,14 +66,14 @@ public class Taller1Application {
 			wos.Save(workorder,null, 1);
 			
 			UserApp user = new UserApp();
-			user.setName("jorge");
-			user.setPassword("{noop}123");
+			user.setName("admin");
+			user.setPassword("{noop}admin");
 			user.setType(UserType.ADMIN);
 			ur.save(user);
 			
 			UserApp user2 = new UserApp();
-			user2.setName("apolo");
-			user2.setPassword("{noop}123");
+			user2.setName("operator");
+			user2.setPassword("{noop}operator");
 			user2.setType(UserType.OPERATOR);
 			ur.save(user2);
 		};

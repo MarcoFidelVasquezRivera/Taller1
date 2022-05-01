@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Product;
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Scrapreason;
@@ -16,6 +17,7 @@ import co.edu.icesi.dev.uccareapp.transport.repositories.ScrapReasonRepository;
 import co.edu.icesi.dev.uccareapp.transport.repositories.WorkOrderRepository;
 
 @Service
+@Transactional
 public class WorkOrderServiceImp implements WorkOrderService{
 
 	private WorkOrderRepository workOrderRepository;

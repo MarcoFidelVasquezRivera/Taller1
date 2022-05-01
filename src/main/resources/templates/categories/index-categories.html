@@ -26,7 +26,6 @@
 							<tr>
 								<th>CategoryName</th>
 								<th>Edit</th>
-								<th>Delete</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -34,8 +33,6 @@
 								<td class="text-info" th:text="${category.name}"></td>
 								<td><a th:href="@{/categories/edit/{id}(id=${category.productcategoryid})}"
 									class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
-								<td><a th:href="@{/categories/del/{id}(id=${category.productcategoryid})}"
-									class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
 							</tr>
 						</tbody>
 					</table>

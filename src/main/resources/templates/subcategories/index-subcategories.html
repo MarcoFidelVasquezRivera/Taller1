@@ -26,18 +26,20 @@
 							<tr>
 								<th>SubcategoryName</th>
 								<th>CategoryName</th>
+								<th>Ir a Categoria</th>
 								<th>Edit</th>
-								<th>Delete</th>
+
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="subcategory : ${subcategories}">
 								<td class="text-info" th:text="${subcategory.name}"></td>
 								<td class="text-info" th:text="${subcategory.productcategory.name}"></td>
+								<td><a th:href="@{/subcategories/category/{id}(id=${subcategory.productcategory.productcategoryid})}"
+									class="btn btn-primary">Ir</a></td>
 								<td><a th:href="@{/subcategories/edit/{id}(id=${subcategory.productsubcategoryid})}"
 									class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
-								<td><a th:href="@{/subcategories/del/{id}(id=${subcategory.productsubcategoryid})}"
-									class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
+
 							</tr>
 						</tbody>
 					</table>

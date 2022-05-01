@@ -1,5 +1,6 @@
 package co.edu.icesi.dev.uccareapp.transport.controller.implementation;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import co.edu.icesi.dev.uccareapp.transport.controller.interfaces.WorkorderController;
+import co.edu.icesi.dev.uccareapp.transport.model.prod.Product;
+import co.edu.icesi.dev.uccareapp.transport.model.prod.Productcategory;
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Productsubcategory;
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Workorder;
 import co.edu.icesi.dev.uccareapp.transport.services.ProductServiceImp;
@@ -62,6 +65,15 @@ public class WorkorderControllerImp implements WorkorderController{
 			wordOrderService.Save(wo,null,wo.getProduct().getProductid());
 		}
 		return "redirect:/workorders/";
+	}
+	
+	@GetMapping("/workorders/product/{id}")
+	public String showProduct(@PathVariable("id") Integer id, Model model) {
+		Product product = productService.findById(id).get();
+		ArrayList<Product> products = new ArrayList<Product>();
+		products.add(product);
+		model.addAttribute("products", products);
+		return "products/index-products";
 	}
 
 	@GetMapping("/workorders/edit/{id}")

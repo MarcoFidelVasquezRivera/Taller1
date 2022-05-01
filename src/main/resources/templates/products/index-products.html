@@ -32,8 +32,10 @@
 								<th>Peso</th>
 								<th>SubcategoryName</th>
 								<th>CategoryName</th>
+								<th>Ver Category</th>
+								<th>Ver Subcategory</th>
 								<th>Edit</th>
-								<th>Delete</th>
+								
 							</tr>
 						</thead>
 						<tbody>
@@ -46,10 +48,12 @@
 								<td class="text-info" th:text="${product.weight}"></td>
 								<td class="text-info" th:text="${product.productsubcategory.name}"></td>
 								<td class="text-info" th:text="${product.productsubcategory.productcategory.name}"></td>
+								<td><a th:href="@{/products/category/{id}(id=${product.productsubcategory.productcategory.productcategoryid})}"
+									class="btn btn-primary">Ir</a></td>
+								<td><a th:href="@{/products/subcategory/{id}(id=${product.productsubcategory.productsubcategoryid})}"
+									class="btn btn-primary">Ir</i></a></td>
 								<td><a th:href="@{/products/edit/{id}(id=${product.productid})}"
 									class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
-								<td><a th:href="@{/products/del/{id}(id=${product.productid})}"
-									class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
 							</tr>
 						</tbody>
 					</table>

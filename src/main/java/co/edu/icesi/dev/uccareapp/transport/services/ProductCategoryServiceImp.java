@@ -6,12 +6,14 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Productcategory;
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Productsubcategory;
 import co.edu.icesi.dev.uccareapp.transport.repositories.ProductCategoryRepository;
 
 @Service
+@Transactional
 public class ProductCategoryServiceImp implements ProductCategoryService{
 	
 	private ProductCategoryRepository productCategoryRepository;

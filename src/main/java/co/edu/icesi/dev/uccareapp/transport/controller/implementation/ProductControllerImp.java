@@ -1,5 +1,6 @@
 package co.edu.icesi.dev.uccareapp.transport.controller.implementation;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import co.edu.icesi.dev.uccareapp.transport.controller.interfaces.ProductController;
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Product;
+import co.edu.icesi.dev.uccareapp.transport.model.prod.Productcategory;
+import co.edu.icesi.dev.uccareapp.transport.model.prod.Productsubcategory;
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Workorder;
 import co.edu.icesi.dev.uccareapp.transport.services.ProductCategoryServiceImp;
 import co.edu.icesi.dev.uccareapp.transport.services.ProductService;
@@ -67,6 +70,24 @@ public class ProductControllerImp implements ProductController{
 			productService.Save(product, product.getProductsubcategory().getProductcategory().getProductcategoryid(), product.getProductsubcategory().getProductsubcategoryid());
 		}
 		return "redirect:/products/";
+	}
+	
+	@GetMapping("/products/category/{id}")
+	public String showCategory(@PathVariable("id") Integer id, Model model) {
+		Productcategory productcategory = productCategoryService.findById(id).get();
+		ArrayList<Productcategory> products = new ArrayList<Productcategory>();
+		products.add(productcategory);
+		model.addAttribute("categories", products);
+		return "categories/index-categories";
+	}
+	
+	@GetMapping("/products/subcategory/{id}")
+	public String showSubcategory(@PathVariable("id") Integer id, Model model) {
+		Productsubcategory productsub = productSubCategoryService.findById(id).get();
+		ArrayList<Productsubcategory> products = new ArrayList<Productsubcategory>();
+		products.add(productsub);
+		model.addAttribute("subcategories", products);
+		return "subcategories/index-subcategories";
 	}
 
 	@GetMapping("/products/edit/{id}")

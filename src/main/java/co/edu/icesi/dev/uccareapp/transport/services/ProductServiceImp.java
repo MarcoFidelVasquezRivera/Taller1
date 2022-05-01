@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Product;
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Productcategory;
@@ -17,6 +18,7 @@ import co.edu.icesi.dev.uccareapp.transport.repositories.ProductRepository;
 import co.edu.icesi.dev.uccareapp.transport.repositories.ProductSubcategoryRepository;
 
 @Service
+@Transactional
 public class ProductServiceImp implements ProductService{
 	
 	private ProductCategoryRepository productCategoryRepository;
