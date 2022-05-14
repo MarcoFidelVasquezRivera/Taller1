@@ -1,15 +1,16 @@
 package co.edu.icesi.dev.uccareapp.transport.daos;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
-import co.edu.icesi.dev.uccareapp.transport.model.prod.Productcategory;
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Productsubcategory;
 
 @Repository
@@ -43,31 +44,50 @@ public class ProductSubcategoryDAO implements IProductSubcategoryDAO{
 		return entityManager.find(Productsubcategory.class, codigo);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Productsubcategory> findAll() {
 		// TODO Auto-generated method stub
-		String jpql = "SELECT psc FROM Productsubcategory psc";
-		return 	entityManager.createQuery(jpql).getResultList();
+		TypedQuery<Productsubcategory> query = entityManager.createQuery(
+				"SELECT psc FROM Productsubcategory psc" , Productsubcategory.class);
+		return 	query.getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Productsubcategory> findByProductCategoryID(Integer productCategoryId) {
 		// TODO Auto-generated method stub
-		String jpql = "SELECT psc FROM Productsubcategory pc WHERE psc.productcategory.productcategoryid = :categoryId";
-		Query query= entityManager.createQuery(jpql);
+		TypedQuery<Productsubcategory> query = entityManager.createQuery(
+				"SELECT psc FROM Productsubcategory psc WHERE psc.productcategory.productcategoryid = :categoryId" , Productsubcategory.class);
 		query.setParameter("categoryId", productCategoryId);
 		return 	query.getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
+
 	@Override
 	public List<Productsubcategory> findByName(String name) {
 		// TODO Auto-generated method stub
-		String jpql = "SELECT psc FROM Productsubcategory pc WHERE psc.name = :name";
-		Query query= entityManager.createQuery(jpql);
+		TypedQuery<Productsubcategory> query = entityManager.createQuery(
+				"SELECT psc FROM Productsubcategory psc WHERE psc.name = :name" , Productsubcategory.class);
 		query.setParameter("name", name);
+		return 	query.getResultList();
+
+	}
+
+	@Override
+	public List<Object[]> findByCategoryAndDates(Integer productCategoryId, LocalDate sellstartdate,
+			LocalDate sellenddate) {
+//	    La(s) subcategoría (s) con sus datos y cantidad de productos (que iniciaron a venderse
+//		en rango de fechas dadas), ordenados por el nombre. Recibe como parámetro una
+//		categoría de productos y retorna todas las subcategorías que cumplen con tener al
+//		menos una un producto en las fechas dadas.
+		// TODO Auto-generated method stub
+		Query query = entityManager.createQuery(
+				"SELECT psc,psc.products FROM Productsubcategory psc WHERE psc.productcategory.productcategoryid = :categoryId "
+				+ "AND psc.productsubcategoryid = "
+				+ "(SELECT pr.productsubcategory.productsubcategoryid FROM Product pr WHERE pr.sellstartdate>=:sellstartdate AND pr.sellenddate<=:sellenddate)" 
+				);
+		query.setParameter("categoryId", productCategoryId);
+		query.setParameter("sellstartdate", sellstartdate);
+		query.setParameter("sellenddate", sellenddate);
 		return 	query.getResultList();
 	}
 

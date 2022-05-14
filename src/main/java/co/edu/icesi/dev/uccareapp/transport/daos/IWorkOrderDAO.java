@@ -10,8 +10,7 @@ public interface IWorkOrderDAO {
     public void delete(Workorder entity);
     public Workorder findById(Integer codigo);
     public List<Workorder> findAll();
-//    Permita que las órdenes de producto se puedan buscar por id del motivo del
-//    desecho y la cantidad de la orden independientemente.  Orderqty
+    public List<Workorder> findByScrapReason(Integer scrapReasonId);
     public List<Workorder> findByOrderqty(Integer orderqty);
     
 }

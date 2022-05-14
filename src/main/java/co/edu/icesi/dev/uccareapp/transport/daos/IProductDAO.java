@@ -14,5 +14,9 @@ public interface IProductDAO {
 //    modelo del producto y el código de la unidad de medida de tamaño
 //    independientemente
     public List<Product> findByProductSubcategoryId(Integer productSubcategoryId);
-    
+    public List<Product> findByProductModel(Integer productmodelid);
+    public List<Product> findByUnitMeasureCode(String unitmeasurecode);
+//    Mostrar el listado productos para los productos que tienen al menos dos órdenes de
+//    trabajo
+    public List<Product> findByNumberOfWorkOrders(Integer Workorderqty);
 }

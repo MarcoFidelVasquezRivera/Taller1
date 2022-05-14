@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
@@ -42,12 +43,12 @@ public class ProductCateogoryDAO implements IProductCategoryDAO{
 		return entityManager.find(Productcategory.class, codigo);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Productcategory> findAll() {
 		// TODO Auto-generated method stub
-		String jpql = "SELECT pc FROM Productcategory pc";
-		return 	entityManager.createQuery(jpql).getResultList();
+		TypedQuery<Productcategory> query = entityManager.createQuery(
+				"SELECT pc FROM Productcategory pc" , Productcategory.class);
+		return 	query.getResultList();
 	}
 
 }
