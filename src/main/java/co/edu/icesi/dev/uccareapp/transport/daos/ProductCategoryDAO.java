@@ -13,7 +13,7 @@ import co.edu.icesi.dev.uccareapp.transport.model.prod.Productcategory;
 
 @Repository
 @Scope("singleton")
-public class ProductCateogoryDAO implements IProductCategoryDAO{
+public class ProductCategoryDAO implements IProductCategoryDAO{
 
 	@PersistenceContext
 	private EntityManager entityManager;
