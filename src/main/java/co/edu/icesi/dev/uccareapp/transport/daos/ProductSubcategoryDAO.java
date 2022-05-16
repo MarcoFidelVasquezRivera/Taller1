@@ -10,11 +10,13 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Productsubcategory;
 
 @Repository
 @Scope("singleton")
+@Transactional
 public class ProductSubcategoryDAO implements IProductSubcategoryDAO{
 
 	@PersistenceContext
@@ -35,7 +37,7 @@ public class ProductSubcategoryDAO implements IProductSubcategoryDAO{
 	@Override
 	public void delete(Productsubcategory entity) {
 		// TODO Auto-generated method stub
-		entityManager.remove(entity);
+		entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
 	}
 
 	@Override

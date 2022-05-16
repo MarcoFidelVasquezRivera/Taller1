@@ -8,11 +8,13 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Workorder;
 
 @Repository
 @Scope("singleton")
+@Transactional
 public class WorkOrderDAO implements IWorkOrderDAO{
 
 	@PersistenceContext
@@ -33,7 +35,7 @@ public class WorkOrderDAO implements IWorkOrderDAO{
 	@Override
 	public void delete(Workorder entity) {
 		// TODO Auto-generated method stub
-		entityManager.remove(entity);
+		entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
 	}
 
 	@Override

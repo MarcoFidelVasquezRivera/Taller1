@@ -8,11 +8,13 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Product;
 
 @Repository
 @Scope("singleton")
+@Transactional
 public class ProductDAO implements IProductDAO{
 	
 	@PersistenceContext
@@ -33,7 +35,7 @@ public class ProductDAO implements IProductDAO{
 	@Override
 	public void delete(Product entity) {
 		// TODO Auto-generated method stub
-		entityManager.remove(entity);
+		entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
 	}
 
 	@Override
@@ -69,7 +71,7 @@ public class ProductDAO implements IProductDAO{
 	}
 
 	@Override
-	public List<Product> findByUnitMeasureCode(String unitmeasurecode) {
+	public List<Product> findByUnitMeasureCode(Integer unitmeasurecode) {
 		// TODO Auto-generated method stub
 		TypedQuery<Product> query = entityManager.createQuery(
 				"SELECT pr FROM Product pr WHERE pr.unitmeasure1.unitmeasurecode = :measureId" , Product.class);
@@ -78,11 +80,10 @@ public class ProductDAO implements IProductDAO{
 	}
 
 	@Override
-	public List<Product> findByNumberOfWorkOrders(Integer Workorderqty) {
+	public List<Product> findByNumberOfWorkOrders() {
 		// TODO Auto-generated method stub
 		TypedQuery<Product> query = entityManager.createQuery(
-				"SELECT pr FROM Product pr WHERE SIZE(pr.workorders) >= :Workorderqty" , Product.class);
-		query.setParameter("Workorderqty", Workorderqty);
+				"SELECT pr FROM Product pr WHERE SIZE(pr.workorders) >= 2" , Product.class);
 		return 	query.getResultList();
 	}
 

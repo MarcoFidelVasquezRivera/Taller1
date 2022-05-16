@@ -4,15 +4,18 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Productcategory;
 
 @Repository
 @Scope("singleton")
+@Transactional
 public class ProductCategoryDAO implements IProductCategoryDAO{
 
 	@PersistenceContext
@@ -34,7 +37,7 @@ public class ProductCategoryDAO implements IProductCategoryDAO{
 	@Override
 	public void delete(Productcategory entity) {
 		// TODO Auto-generated method stub
-		entityManager.remove(entity);
+		entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
 	}
 
 	@Override
@@ -51,4 +54,6 @@ public class ProductCategoryDAO implements IProductCategoryDAO{
 		return 	query.getResultList();
 	}
 
+	
+	
 }

@@ -15,8 +15,8 @@ public interface IProductDAO {
 //    independientemente
     public List<Product> findByProductSubcategoryId(Integer productSubcategoryId);
     public List<Product> findByProductModel(Integer productmodelid);
-    public List<Product> findByUnitMeasureCode(String unitmeasurecode);
+    public List<Product> findByUnitMeasureCode(Integer unitmeasurecode);
 //    Mostrar el listado productos para los productos que tienen al menos dos órdenes de
 //    trabajo
-    public List<Product> findByNumberOfWorkOrders(Integer Workorderqty);
+    public List<Product> findByNumberOfWorkOrders();
 }

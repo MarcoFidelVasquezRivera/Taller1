@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -13,22 +14,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import co.edu.icesi.dev.uccareapp.transport.daos.IProductCategoryDAO;
+import co.edu.icesi.dev.uccareapp.transport.daos.ProductCategoryDAO;
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Productcategory;
+import co.edu.icesi.dev.uccareapp.transport.repositories.ProductCategoryRepository;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProductCategoryDaoTest {
 
 	@Autowired
-	private IProductCategoryDAO productCategoryDAO;
+	private ProductCategoryDAO productCategoryDAO;
 	
+	@Autowired ProductCategoryRepository productCategoryRepository;
+	
+	@BeforeEach
+	public void cleaner() {
+		productCategoryRepository.deleteAll();
+	}
 	
 	@Test
 	@Order(1)
 	public void saveAndFind() {
 		Productcategory pc = new Productcategory();
 		pc.setName("ABC");
-		pc.setProductcategoryid(1);
 		
 		productCategoryDAO.save(pc);
 		Productcategory pc2 = productCategoryDAO.findById(1);
@@ -41,15 +49,14 @@ class ProductCategoryDaoTest {
 	public void delete() {
 		Productcategory pc = new Productcategory();
 		pc.setName("ABC");
-		pc.setProductcategoryid(1);
 		
 		productCategoryDAO.save(pc);
-		Productcategory pc2 = productCategoryDAO.findById(1);
-		
+		Productcategory pc2 = productCategoryDAO.findById(2);
 		assertNotNull(pc2);
+		
 		productCategoryDAO.delete(pc2);
 		
-		pc2 = productCategoryDAO.findById(1);
+		pc2 = productCategoryDAO.findById(2);
 		assertNull(pc2);
 	}
 	
@@ -58,16 +65,15 @@ class ProductCategoryDaoTest {
 	public void update() {
 		Productcategory pc = new Productcategory();
 		pc.setName("ABC");
-		pc.setProductcategoryid(1);
 		
 		productCategoryDAO.save(pc);
-		Productcategory pc2 = productCategoryDAO.findById(1);
+		Productcategory pc2 = productCategoryDAO.findById(3);
 		
 		assertNotNull(pc2);
 		
 		pc2.setName("ALO");
 		productCategoryDAO.update(pc2);
-		pc = productCategoryDAO.findById(1);
+		pc = productCategoryDAO.findById(3);
 		
 		assertEquals(pc.getName(), pc2.getName());
 	}
@@ -77,7 +83,6 @@ class ProductCategoryDaoTest {
 	public void findAll() {
 		Productcategory pc = new Productcategory();
 		pc.setName("ABC");
-		pc.setProductcategoryid(1);
 		productCategoryDAO.save(pc);
 		
 		pc = new Productcategory();
