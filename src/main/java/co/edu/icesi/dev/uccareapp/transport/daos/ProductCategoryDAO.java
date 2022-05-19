@@ -15,13 +15,13 @@ import co.edu.icesi.dev.uccareapp.transport.model.prod.Productcategory;
 
 @Repository
 @Scope("singleton")
-@Transactional
 public class ProductCategoryDAO implements IProductCategoryDAO{
 
 	@PersistenceContext
 	private EntityManager entityManager;
 	
 	@Override
+	@Transactional
 	public void save(Productcategory entity) {
 		// TODO Auto-generated method stub
 		entityManager.persist(entity);
@@ -29,12 +29,14 @@ public class ProductCategoryDAO implements IProductCategoryDAO{
 	}
 
 	@Override
+	@Transactional
 	public void update(Productcategory entity) {
 		// TODO Auto-generated method stub
 		entityManager.merge(entity);
 	}
 
 	@Override
+	@Transactional
 	public void delete(Productcategory entity) {
 		// TODO Auto-generated method stub
 		entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));

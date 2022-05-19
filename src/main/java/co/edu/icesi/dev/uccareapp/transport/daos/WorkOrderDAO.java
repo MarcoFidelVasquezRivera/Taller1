@@ -14,25 +14,27 @@ import co.edu.icesi.dev.uccareapp.transport.model.prod.Workorder;
 
 @Repository
 @Scope("singleton")
-@Transactional
 public class WorkOrderDAO implements IWorkOrderDAO{
 
 	@PersistenceContext
 	private EntityManager entityManager;
 	
 	@Override
+	@Transactional
 	public void save(Workorder entity) {
 		// TODO Auto-generated method stub
 		entityManager.persist(entity);
 	}
 
 	@Override
+	@Transactional
 	public void update(Workorder entity) {
 		// TODO Auto-generated method stub
 		entityManager.merge(entity);
 	}
 
 	@Override
+	@Transactional
 	public void delete(Workorder entity) {
 		// TODO Auto-generated method stub
 		entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));

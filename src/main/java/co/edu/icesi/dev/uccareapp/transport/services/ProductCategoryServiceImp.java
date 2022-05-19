@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.icesi.dev.uccareapp.transport.daos.IProductCategoryDAO;
+import co.edu.icesi.dev.uccareapp.transport.daos.ProductCategoryDAO;
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Productcategory;
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Productsubcategory;
 import co.edu.icesi.dev.uccareapp.transport.repositories.ProductCategoryRepository;
@@ -49,10 +50,10 @@ public class ProductCategoryServiceImp implements ProductCategoryService{
 			throw new NumberFormatException("The length of the name is can't be less that 3 charactes");
 		}
 
-		Optional<Productcategory> opt = productCategoryRepository.findById(productCategory.getProductcategoryid());
-		Productcategory pc = opt.get();
+		Productcategory pc  = productCategoryRepository.findById(productCategory.getProductcategoryid()).get();
 		
-		if(opt.isEmpty()) {
+		
+		if(pc==null) {
 			throw new NullPointerException("the Product category that is going to be edited does not exist");
 		}
 		

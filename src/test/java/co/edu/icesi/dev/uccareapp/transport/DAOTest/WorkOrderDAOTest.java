@@ -16,6 +16,10 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Propagation;
 
 import co.edu.icesi.dev.uccareapp.transport.daos.IWorkOrderDAO;
 import co.edu.icesi.dev.uccareapp.transport.daos.ProductCategoryDAO;
@@ -38,6 +42,8 @@ import co.edu.icesi.dev.uccareapp.transport.repositories.WorkOrderRepository;
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(Lifecycle.PER_CLASS)
+@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+@Rollback(false)
 class WorkOrderDAOTest {
 
 	@Autowired
@@ -57,12 +63,7 @@ class WorkOrderDAOTest {
 	
 	@Autowired
 	private ScrapReasonRepository scrapReasonRepository;
-//	@Autowired
-//	private ProductModelRepository productModelRepository;
-//	
-//	@Autowired
-//	private UnitMeasureRepository unitMeasureRepository;
-	
+
 	@BeforeAll
 	public void setup1() {
 		Productcategory pc = new Productcategory();

@@ -16,6 +16,10 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Propagation;
 
 import co.edu.icesi.dev.uccareapp.transport.daos.IProductDAO;
 import co.edu.icesi.dev.uccareapp.transport.daos.ProductCategoryDAO;
@@ -36,6 +40,8 @@ import co.edu.icesi.dev.uccareapp.transport.repositories.UnitMeasureRepository;
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(Lifecycle.PER_CLASS)
+@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+@Rollback(false)
 class ProductDAOTest {
 
 	@Autowired
@@ -237,8 +243,9 @@ class ProductDAOTest {
 		
 		productDAO.save(product);
 		productDAO.save(product2);
+		productDAO.save(product3);
 		
-		List<Product> list = productDAO.findAll();
+		List<Product> list = productDAO.findByProductSubcategoryId(1);
 		
 		assertNotNull(list);
 		assertEquals(list.size(), 2);
@@ -387,9 +394,9 @@ class ProductDAOTest {
 		productDAO.save(product2);
 		productDAO.save(product3);
 		
-		product = productDAO.findById(14);
-		product2 = productDAO.findById(15);
-		product3 = productDAO.findById(16);
+		product = productDAO.findById(15);
+		product2 = productDAO.findById(16);
+		product3 = productDAO.findById(17);
 		
 		Workorder workorder = new Workorder();
 		workorder.setStartdate(LocalDate.of(2020, 1,8));
@@ -415,6 +422,8 @@ class ProductDAOTest {
 		workOrderDao.save(workorder);
 		workOrderDao.save(workorder2);
 		workOrderDao.save(workorder3);
+		
+		
 		
 		List<Product> list = productDAO.findByNumberOfWorkOrders();
 		

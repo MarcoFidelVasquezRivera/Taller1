@@ -16,25 +16,27 @@ import co.edu.icesi.dev.uccareapp.transport.model.prod.Productsubcategory;
 
 @Repository
 @Scope("singleton")
-@Transactional
 public class ProductSubcategoryDAO implements IProductSubcategoryDAO{
 
 	@PersistenceContext
 	private EntityManager entityManager;
 	
 	@Override
+	@Transactional
 	public void save(Productsubcategory entity) {
 		// TODO Auto-generated method stub
 		entityManager.persist(entity);
 	}
 
 	@Override
+	@Transactional
 	public void update(Productsubcategory entity) {
 		// TODO Auto-generated method stub
 		entityManager.merge(entity);
 	}
 
 	@Override
+	@Transactional
 	public void delete(Productsubcategory entity) {
 		// TODO Auto-generated method stub
 		entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
@@ -83,9 +85,10 @@ public class ProductSubcategoryDAO implements IProductSubcategoryDAO{
 //		menos una un producto en las fechas dadas.
 		// TODO Auto-generated method stub
 		Query query = entityManager.createQuery(
-				"SELECT psc,psc.products FROM Productsubcategory psc WHERE psc.productcategory.productcategoryid = :categoryId "
+				"SELECT psc, (SELECT pr.productsubcategory.productsubcategoryid FROM Product pr WHERE pr.sellstartdate>=:sellstartdate AND pr.sellenddate<=:sellenddate)"
+				+ "FROM Productsubcategory psc WHERE psc.productcategory.productcategoryid = :categoryId "
 				+ "AND psc.productsubcategoryid = "
-				+ "(SELECT pr.productsubcategory.productsubcategoryid FROM Product pr WHERE pr.sellstartdate>=:sellstartdate AND pr.sellenddate<=:sellenddate)" 
+				+ "(SELECT pr.productsubcategory.productsubcategoryid FROM Product pr WHERE pr.sellstartdate>=:sellstartdate AND pr.sellenddate<=:sellenddate) ORDER BY psc.name" 
 				);
 		query.setParameter("categoryId", productCategoryId);
 		query.setParameter("sellstartdate", sellstartdate);

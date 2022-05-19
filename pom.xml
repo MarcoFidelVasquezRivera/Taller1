@@ -12,7 +12,7 @@
 	<groupId>co.edu.icesi.dev.uccareapp.transport.model</groupId>
 	<artifactId>taller2-Vasquez-Marco</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>taller2-Vasquez-Marco</name>
+	<name>taller3-Vasquez-Marco</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
